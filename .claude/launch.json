@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "kmedia-frontend",
+      "runtimeExecutable": "ruby",
+      "runtimeArgs": ["-run", "-e", "httpd", "/Users/rahultalasila/Documents/K Media Locations/frontend", "-p", "8080"],
+      "port": 8080
+    }
+  ]
+}

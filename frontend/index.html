@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K Media DOOH — Screen Locations</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- LOADING SCREEN -->
+  <div class="loading-screen" id="loadingScreen">
+    <img src="assets/logo.png" alt="K Media DOOH" class="loading-logo" onerror="this.style.display='none'">
+    <h2>K MEDIA DOOH</h2>
+    <div class="loading-spinner"></div>
+  </div>
+
+  <!-- HERO SECTION -->
+  <header class="hero">
+    <div class="hero-content">
+      <img src="assets/logo.png" alt="K Media DOOH" class="logo" onerror="this.style.display='none'">
+      <h1>K MEDIA DOOH</h1>
+      <p class="hero-subtitle">Premium Digital Advertising Across Fine Dining Restaurants</p>
+      <p class="hero-city" id="cityName"></p>
+      <button class="admin-login-btn" id="adminLoginBtn" style="display:none;">
+        <i class="fas fa-lock"></i> Admin
+      </button>
+    </div>
+  </header>
+
+  <!-- ADMIN TOP BAR (hidden by default) -->
+  <div class="admin-bar" id="adminBar" style="display:none;">
+    <div class="admin-bar-content">
+      <span><i class="fas fa-shield-alt"></i> Admin Mode</span>
+      <div class="admin-bar-actions">
+        <button onclick="openDashboard()"><i class="fas fa-chart-bar"></i> Dashboard</button>
+        <button onclick="openManageCities()"><i class="fas fa-city"></i> Manage Cities</button>
+        <button onclick="openManageAreas()"><i class="fas fa-map-marker-alt"></i> Manage Areas</button>
+        <button onclick="openAddLocation()"><i class="fas fa-plus"></i> Add Location</button>
+        <button onclick="openSettings()"><i class="fas fa-cog"></i> Settings</button>
+        <button onclick="openQRCodes()"><i class="fas fa-qrcode"></i> QR Codes</button>
+        <button onclick="logout()" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AD FORMAT SPECS -->
+  <section class="ad-specs" id="adSpecs">
+    <div class="container">
+      <h2><i class="fas fa-tv"></i> Ad Format Specifications</h2>
+      <div class="specs-grid">
+        <div class="spec-card">
+          <i class="fas fa-file-video"></i>
+          <h3>Video Format</h3>
+          <p>MP4, AVI, MOV</p>
+        </div>
+        <div class="spec-card">
+          <i class="fas fa-file-image"></i>
+          <h3>Image Format</h3>
+          <p>JPG, PNG, JPEG</p>
+        </div>
+        <div class="spec-card">
+          <i class="fas fa-expand"></i>
+          <h3>Resolution</h3>
+          <p>1920 x 1080 (Full HD)</p>
+        </div>
+        <div class="spec-card">
+          <i class="fas fa-clock"></i>
+          <h3>Ad Duration</h3>
+          <p>15 sec / 30 sec / 60 sec</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-it-works">
+    <div class="container">
+      <h2><i class="fas fa-info-circle"></i> How It Works</h2>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <div class="step-icon"><i class="fas fa-search"></i></div>
+          <h3>Browse Locations</h3>
+          <p>Explore our premium screen locations across restaurants in your city</p>
+        </div>
+        <div class="step-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <div class="step-icon"><i class="fas fa-check-circle"></i></div>
+          <h3>Select Locations</h3>
+          <p>Tick the locations where you want your ad to be displayed</p>
+        </div>
+        <div class="step-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <div class="step-icon"><i class="fas fa-user-edit"></i></div>
+          <h3>Fill Your Details</h3>
+          <p>Enter your company name, GST number & contact details</p>
+        </div>
+        <div class="step-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <div class="step-icon"><i class="fab fa-whatsapp"></i></div>
+          <h3>Send via WhatsApp</h3>
+          <p>Press the WhatsApp button — your inquiry reaches us instantly!</p>
+        </div>
+        <div class="step-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="step-card">
+          <div class="step-number">5</div>
+          <div class="step-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+          <h3>Get Your Quotation</h3>
+          <p>We will share you the quotation for your selected locations</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATIONS SECTION -->
+  <section class="locations-section" id="locationsSection">
+    <div class="container">
+      <h2><i class="fas fa-map-marker-alt"></i> Screen Locations</h2>
+      <div class="search-filter-bar">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" id="searchInput" placeholder="Search by restaurant name..." oninput="filterLocations()">
+        </div>
+        <div class="filter-box">
+          <i class="fas fa-filter"></i>
+          <select id="areaFilter" onchange="filterLocations()">
+            <option value="all">All Areas</option>
+          </select>
+        </div>
+      </div>
+      <div id="locationsContainer"></div>
+    </div>
+  </section>
+
+  <!-- SELECTED COUNT FLOATING BAR -->
+  <div class="floating-bar" id="floatingBar" style="display:none;">
+    <span id="selectedCount">0 locations selected</span>
+    <button onclick="goToReview()" class="proceed-btn">
+      Proceed <i class="fas fa-arrow-right"></i>
+    </button>
+  </div>
+
+  <!-- REVIEW PAGE (hidden by default) -->
+  <section class="review-page" id="reviewPage" style="display:none;">
+    <div class="container">
+      <button class="back-btn" onclick="goBackToLocations()">
+        <i class="fas fa-arrow-left"></i> Back to Locations
+      </button>
+      <h2><i class="fas fa-clipboard-list"></i> Selected Locations</h2>
+      <div id="selectedLocationsList"></div>
+
+      <div class="customer-form">
+        <h3><i class="fas fa-building"></i> Your Details</h3>
+        <div class="form-group">
+          <label>Company Name *</label>
+          <input type="text" id="companyName" placeholder="Enter your company name" required>
+        </div>
+        <div class="form-group">
+          <label>GST Number *</label>
+          <input type="text" id="gstNumber" placeholder="Enter your GST number" required>
+        </div>
+        <div class="form-group">
+          <label>Contact Person Name *</label>
+          <input type="text" id="contactPerson" placeholder="Enter contact person name" required>
+        </div>
+        <div class="form-group">
+          <label>Phone Number *</label>
+          <input type="tel" id="phoneNumber" placeholder="Enter phone number" required>
+        </div>
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" id="emailAddress" placeholder="Enter email address" required>
+        </div>
+
+        <div class="action-buttons">
+          <button class="pdf-btn" onclick="downloadPDF()">
+            <i class="fas fa-file-pdf"></i> Download PDF
+          </button>
+          <button class="whatsapp-btn" onclick="sendToWhatsApp()">
+            <i class="fab fa-whatsapp"></i> Send via WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGIN MODAL -->
+  <div class="modal-overlay" id="loginModal" style="display:none;">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('loginModal')">&times;</button>
+      <h2><i class="fas fa-lock"></i> Admin Login</h2>
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="adminUsername" placeholder="Enter username">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="adminPassword" placeholder="Enter password">
+      </div>
+      <button class="primary-btn" onclick="adminLogin()">Login</button>
+    </div>
+  </div>
+
+  <!-- DASHBOARD MODAL -->
+  <div class="modal-overlay" id="dashboardModal" style="display:none;">
+    <div class="modal modal-lg">
+      <button class="modal-close" onclick="closeModal('dashboardModal')">&times;</button>
+      <h2><i class="fas fa-chart-bar"></i> Dashboard</h2>
+      <div class="dashboard-grid" id="dashboardStats"></div>
+    </div>
+  </div>
+
+  <!-- MANAGE CITIES MODAL -->
+  <div class="modal-overlay" id="citiesModal" style="display:none;">
+    <div class="modal modal-lg">
+      <button class="modal-close" onclick="closeModal('citiesModal')">&times;</button>
+      <h2><i class="fas fa-city"></i> Manage Cities</h2>
+      <div class="modal-form">
+        <div class="form-row">
+          <input type="text" id="newCityName" placeholder="Enter city name">
+          <input type="text" id="newCityWhatsapp" placeholder="WhatsApp no. (e.g., 919876543210)">
+          <button class="primary-btn" onclick="addCity()"><i class="fas fa-plus"></i> Add City</button>
+        </div>
+      </div>
+      <div id="citiesList" class="manage-list"></div>
+    </div>
+  </div>
+
+  <!-- MANAGE AREAS MODAL -->
+  <div class="modal-overlay" id="areasModal" style="display:none;">
+    <div class="modal modal-lg">
+      <button class="modal-close" onclick="closeModal('areasModal')">&times;</button>
+      <h2><i class="fas fa-map-marker-alt"></i> Manage Areas</h2>
+      <div class="modal-form">
+        <div class="form-row">
+          <select id="areaCitySelect"></select>
+          <input type="text" id="newAreaName" placeholder="Enter area name">
+          <button class="primary-btn" onclick="addArea()"><i class="fas fa-plus"></i> Add Area</button>
+        </div>
+      </div>
+      <div id="areasList" class="manage-list"></div>
+    </div>
+  </div>
+
+  <!-- ADD/EDIT LOCATION MODAL -->
+  <div class="modal-overlay" id="locationModal" style="display:none;">
+    <div class="modal modal-lg">
+      <button class="modal-close" onclick="closeModal('locationModal')">&times;</button>
+      <h2 id="locationModalTitle"><i class="fas fa-plus"></i> Add Location</h2>
+      <div class="modal-form">
+        <div class="form-group">
+          <label>City</label>
+          <select id="locCitySelect" onchange="updateLocAreaOptions()"></select>
+        </div>
+        <div class="form-group">
+          <label>Area</label>
+          <select id="locAreaSelect"></select>
+        </div>
+        <div class="form-group">
+          <label>Restaurant Name</label>
+          <input type="text" id="locName" placeholder="Enter restaurant name">
+        </div>
+        <div class="form-group">
+          <label>TV Size</label>
+          <input type="text" id="locTvSize" placeholder='e.g., 43 inch, 55 inch'>
+        </div>
+        <div class="form-group">
+          <label>Number of Screens</label>
+          <input type="number" id="locScreens" placeholder="e.g., 2" min="1">
+        </div>
+        <div class="form-group">
+          <label>Images (multiple allowed)</label>
+          <input type="file" id="locImages" accept="image/*" multiple>
+          <div id="imagePreview" class="image-preview"></div>
+        </div>
+        <div class="form-group">
+          <label>Screen Orientation</label>
+          <select id="locOrientation">
+            <option value="horizontal">Horizontal</option>
+            <option value="vertical">Vertical</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select id="locStatus">
+            <option value="available">Available</option>
+            <option value="booked">Booked</option>
+          </select>
+        </div>
+        <button class="primary-btn" id="saveLocationBtn" onclick="saveLocation()">
+          <i class="fas fa-save"></i> Save Location
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS MODAL -->
+  <div class="modal-overlay" id="settingsModal" style="display:none;">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('settingsModal')">&times;</button>
+      <h2><i class="fas fa-cog"></i> Settings</h2>
+      <div class="form-group">
+        <label>WhatsApp Number (with country code)</label>
+        <input type="text" id="whatsappNumber" placeholder="e.g., 919876543210">
+      </div>
+      <div class="form-group">
+        <label>Ad Specs — Video Formats</label>
+        <input type="text" id="specVideo" placeholder="MP4, AVI, MOV">
+      </div>
+      <div class="form-group">
+        <label>Ad Specs — Image Formats</label>
+        <input type="text" id="specImage" placeholder="JPG, PNG, JPEG">
+      </div>
+      <div class="form-group">
+        <label>Ad Specs — Resolution</label>
+        <input type="text" id="specResolution" placeholder="1920 x 1080">
+      </div>
+      <div class="form-group">
+        <label>Ad Specs — Duration</label>
+        <input type="text" id="specDuration" placeholder="15 sec / 30 sec / 60 sec">
+      </div>
+      <button class="primary-btn" onclick="saveSettings()"><i class="fas fa-save"></i> Save Settings</button>
+    </div>
+  </div>
+
+  <!-- QR CODES MODAL -->
+  <div class="modal-overlay" id="qrModal" style="display:none;">
+    <div class="modal modal-lg">
+      <button class="modal-close" onclick="closeModal('qrModal')">&times;</button>
+      <h2><i class="fas fa-qrcode"></i> QR Codes</h2>
+      <div id="qrCodesList" class="qr-grid"></div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="js/logo.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
