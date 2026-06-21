@@ -350,24 +350,8 @@ function sendToWhatsApp() {
   const pdfFileName = `KMedia_${currentCity.name}_${companyName.replace(/\s+/g, '_')}.pdf`;
   const pdfFile = new File([pdfBlob], pdfFileName, { type: 'application/pdf' });
 
-  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-  if (isMobile && navigator.canShare && navigator.canShare({ files: [pdfFile] })) {
-    navigator.share({
-      files: [pdfFile],
-      title: 'K Media DOOH — Location Inquiry'
-    }).catch(() => {
-      pdfDoc.save(pdfFileName);
-      showToast('PDF downloaded — share it on WhatsApp');
-    });
-  } else {
-    const whatsappUrl = `https://wa.me/${cityWhatsapp}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl);
-    setTimeout(() => {
-      pdfDoc.save(pdfFileName);
-      showToast('PDF downloaded — attach it in WhatsApp chat');
-    }, 1000);
-  }
+  const whatsappUrl = `https://wa.me/${cityWhatsapp}?text=${encodeURIComponent(message)}`;
+  window.location.href = whatsappUrl;
 }
 
 // ===== PDF GENERATION =====
