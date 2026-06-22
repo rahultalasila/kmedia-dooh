@@ -10,7 +10,10 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use(express.static(path.join(__dirname, '..', 'frontend')));
+const frontendPath = path.join(__dirname, 'public');
+const frontendAlt = path.join(__dirname, '..', 'frontend');
+const servePath = require('fs').existsSync(frontendPath) ? frontendPath : frontendAlt;
+app.use(express.static(servePath));
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
