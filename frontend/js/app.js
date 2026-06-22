@@ -350,8 +350,24 @@ function sendToWhatsApp() {
   const pdfFileName = `KMedia_${currentCity.name}_${companyName.replace(/\s+/g, '_')}.pdf`;
   const pdfFile = new File([pdfBlob], pdfFileName, { type: 'application/pdf' });
 
-  const whatsappUrl = `https://wa.me/${cityWhatsapp}?text=${encodeURIComponent(message)}`;
-  window.location.href = whatsappUrl;
+  // Try sharing PDF directly (works on mobile)
+  if (navigator.canShare && navigator.canShare({ files: [pdfFile] })) {
+    navigator.share({
+      files: [pdfFile],
+      title: 'K Media DOOH — Location Inquiry'
+    }).catch(() => {
+      // If share cancelled, just download PDF
+      pdfDoc.save(pdfFileName);
+      showToast('PDF downloaded');
+    });
+  } else {
+    // Desktop: download PDF and open WhatsApp without text
+    pdfDoc.save(pdfFileName);
+    showToast('PDF downloaded — send it on WhatsApp');
+    setTimeout(() => {
+      window.open(`https://wa.me/${cityWhatsapp}`);
+    }, 500);
+  }
 }
 
 // ===== PDF GENERATION =====
