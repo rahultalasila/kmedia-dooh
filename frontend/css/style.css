@@ -281,12 +281,11 @@ body {
 .step-card {
   background: var(--white);
   border-radius: var(--radius);
-  padding: 25px 20px;
+  padding: 18px 15px;
   text-align: center;
   box-shadow: var(--shadow);
   flex: 1;
   position: relative;
-  min-height: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -340,25 +339,38 @@ body {
 
 @media (max-width: 768px) {
   .steps-grid {
-    flex-direction: column;
-    gap: 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
   }
 
   .step-card {
     width: 100%;
-    min-height: auto;
-    padding: 20px 15px;
+    padding: 15px 10px;
+  }
+
+  .step-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    max-width: 50%;
+    margin: 0 auto;
   }
 
   .step-arrow {
-    transform: rotate(90deg);
-    font-size: 1rem;
-    margin: -5px 0;
+    display: none;
   }
 
   .step-icon {
     font-size: 1.5rem;
     margin-bottom: 8px;
+    margin-top: 5px;
+  }
+
+  .step-card h3 {
+    font-size: 0.85rem;
+  }
+
+  .step-card p {
+    font-size: 0.7rem;
   }
 }
 
