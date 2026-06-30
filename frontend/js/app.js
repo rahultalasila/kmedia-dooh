@@ -33,7 +33,9 @@ async function init() {
   document.getElementById('cityName').textContent = currentCity.name;
   document.title = `K Media DOOH — ${currentCity.name}`;
 
-  if (slugify(currentCity.name) === 'hyderabad' || currentCity.id === 'hyderabad') {
+  const isHQ = slugify(currentCity.name) === 'hyderabad' || currentCity.id === 'hyderabad';
+  const hasSecretKey = params.get('admin') === 'kmedia2026';
+  if (isHQ && hasSecretKey) {
     document.getElementById('adminLoginBtn').style.display = 'inline-block';
   }
 
